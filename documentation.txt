@@ -1,0 +1,42 @@
+We are going to start documenting after the UI.
+Ive already created a navBar and a main page (sort of like the TL for my To dos)
+The Tl has an add button (i keep referencing  a tl because i could have a good reference next time i want to build a social media sort of project)
+
+On add i should get a dialogue box for adding a new to do.
+The dialogue box is a form. I have a good mdn link to help me with that functionality. https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal.
+
+We will come to that later.
+Today we are focusing on cancelling the text when the radio button is clicked
+The card containing the To- do should vanish in 2-3sec 
+
+The important thing i learnt while doing(infact i was already taught this, but due to no practice i forgot again. Also another concept to keep note is bubbling. i had to remember that although the radio is what i click and want to check. the input element does not contain the text (the to do) we want to apply the Line strike through. So the event listener should be on the parent element which is the li. and due to bubbling we can activate the listener when we click the radio.
+Now the important thing is to note the difference between target and CurrentTarget. radio is our target because thats what we clicked. but currentTarget is what we will apply our function to. due to bubbling
+and ta-da it works!
+
+For the next step. im thinking of a transition and vanish type of like. interacctivity. 
+So it shrinks and shrinks then poof display set to none.
+
+
+//DELETED CODE
+  // POP UP FOR DATE PICKER
+  // notifBtn.addEventListener("click", (event) => {
+  //   const input = event.target.previousElementSibling;
+  //   try {
+  //     input.showPicker();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   console.log(dateInput.value);
+  // });
+
+   //testing localstorage
+  // if (localStorage) {
+  //   // Add an event listener for form submissions
+  //   saveBtn.addEventListener("click", function () {
+  //     // Get the value of the name field.
+  //     var task = document.getElementById("task").value;
+
+  //     // Save the name in localStorage.
+  //     localStorage.setItem("task", task);
+  //   });
+  // }

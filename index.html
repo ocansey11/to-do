@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+
+    <script
+      src="https://kit.fontawesome.com/0e526aa50c.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>To-Do</title>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="navbar">
+        <ul class="nav-list">
+          <li class="nav-item">Urgent</li>
+          <li class="nav-item">Important</li>
+          <li class="nav-item">One day</li>
+        </ul>
+      </nav>
+
+      <main class="main">
+        <ul class="todo_list">
+          <!-- Put the newly created lists in a list. -->
+
+          <li class="todo_list-item">
+            <input type="radio" id="one" class="radio" /> Feed the Dogs
+          </li>
+          <li class="todo_list-item">
+            <input type="radio" id="" class="radio" /> Feed the Squirrels
+          </li>
+
+          <li class="todo_list-item">
+            <input type="radio" id="" class="radio" /> Feed the Anchovies
+          </li>
+
+          <li class="todo_list-item">
+            <input type="radio" id="" class="radio" /> I have tto give this
+            nigga a box of post notes
+          </li>
+        </ul>
+
+        <dialog id="todo_card">
+          <form>
+            <input id="task" name="todo" type="text" placeholder="Todo" />
+
+            <div class="card-footer">
+              <div class="div">
+                <div class="footer-icons">
+                  <input
+                    type="date"
+                    id="pop_up-date"
+                    min="2017-04-01"
+                    max="2017-04-20"
+                    required
+                  />
+                  <!-- <i class="fa-solid fa-bell"> </i> -->
+                  <!-- <i class="fa-solid fa-exclamation"> </i> -->
+                  <select name="choice" id="selection">
+                    <option value="important">Important</option>
+                    <option value="urgent" selected>Urgent</option>
+                    <option value="ondeday">One day</option>
+                  </select>
+
+                  <br />
+                </div>
+                <span>time info</span>
+              </div>
+
+              <div class="action-btn">
+                <button id="cancel_todo" type="reset">CANCEL</button>
+                <button id="save_todo" type="submit">SAVE</button>
+              </div>
+            </div>
+          </form>
+        </dialog>
+
+        <button class="add_btn">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </main>
+    </div>
+  </body>
+
+  <script src="index.js"></script>
+</html>
