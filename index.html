@@ -44,7 +44,13 @@
 
         <dialog id="todo_card">
           <form>
-            <input id="task" name="todo" type="text" placeholder="Todo" />
+            <input
+              id="task"
+              name="todo"
+              type="text"
+              placeholder="Todo"
+              required
+            />
 
             <div class="card-footer">
               <div class="div">
@@ -52,8 +58,7 @@
                   <input
                     type="date"
                     id="pop_up-date"
-                    min="2017-04-01"
-                    max="2017-04-20"
+                    name="reminder"
                     required
                   />
                   <!-- <i class="fa-solid fa-bell"> </i> -->

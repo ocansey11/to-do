@@ -16,6 +16,10 @@ window.addEventListener("DOMContentLoaded", () => {
   const selection = document.getElementById("selection");
   const task = document.getElementById("task");
 
+  // FORM HANDLING. Have to prevent previous dates from being clickable
+  var today = new Date().toISOString().split("T")[0];
+  dateInput.setAttribute("min", today);
+
   // Declare saveBtn in the global scope
   window.saveBtn = saveBtn;
 
@@ -57,7 +61,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   // Event listenres for Button
-  saveBtn.addEventListener("click", function () {
+  saveBtn.addEventListener("submit", function () {
     var taskValue = task.value;
     var selectionValue = selection.value;
     var dateValue = dateInput.value;
