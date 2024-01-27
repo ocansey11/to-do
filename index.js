@@ -1,7 +1,24 @@
+var today = new Date().toISOString().split("T")[0];
+
+function returnTime() {
+  var currentDate = new Date();
+  var hours = currentDate.getHours();
+  var minutes = currentDate.getMinutes();
+  // var seconds = currentDate.getSeconds();
+  hours = hours < 10 ? "0" + hours : hours;
+  minutes = minutes < 10 ? "0" + minutes + 4 : minutes + 4;
+  var timeString = hours + ":" + minutes;
+  return timeString;
+}
+
+currentTime = returnTime();
+// setInterval(displayTime, 1000);
+
 var storage = JSON.parse(localStorage.getItem("tasks")) || [
   {
     task: "add a task",
-    date: "1999-28-05",
+    date: today,
+    time: "",
     selection: "urgent",
   },
 ];
@@ -10,19 +27,25 @@ window.addEventListener("DOMContentLoaded", () => {
   let addBtn = document.querySelector(".add_btn");
   const cancelBtn = document.getElementById("cancel_todo");
   const saveBtn = document.getElementById("save_todo");
-  // const notifBtn = document.querySelector(".fa-bell");
   const dialog = document.getElementById("todo_card");
   const dateInput = document.getElementById("pop_up-date");
+  const timeInput = document.getElementById("appt");
   const selection = document.getElementById("selection");
   const task = document.getElementById("task");
+  const timeline = document.querySelector(".todo_list");
 
-  // FORM HANDLING. Have to prevent previous dates from being clickable
+  // FORM HANDLING.
+  // Time Handling
   var today = new Date().toISOString().split("T")[0];
   dateInput.setAttribute("min", today);
 
-  // Declare saveBtn in the global scope
-  window.saveBtn = saveBtn;
+  function timeValidity() {
+    if (dateInput.value == today) {
+      timeInput.setAttribute("min", currentTime);
+    }
+  }
 
+  //Add Button, Modal Handling
   function openCheck(dialog) {
     if (dialog.open) {
       console.log("Dialog open");
@@ -43,7 +66,8 @@ window.addEventListener("DOMContentLoaded", () => {
     openCheck(dialog);
   });
 
-  // STRIKING LINE THROUGH WHEN RADIO IS CLICKED
+  // EVENT LISTENERS
+  // Striking line when radio is clicked
   let listCards = document.querySelectorAll(".todo_list-item");
 
   listCards.forEach((list) => {
@@ -60,7 +84,13 @@ window.addEventListener("DOMContentLoaded", () => {
     }, 500);
   }
 
-  // Event listenres for Button
+  // Time handling
+  dateInput.addEventListener("change", function () {
+    timeValidity();
+    console.log(timeInput);
+  });
+
+  // Form submission
   saveBtn.addEventListener("submit", function () {
     var taskValue = task.value;
     var selectionValue = selection.value;
@@ -78,4 +108,11 @@ window.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("tasks", JSON.stringify(storage));
   });
   console.log(storage);
+
+  //Appending the items from localstorage unto the tl
+  for (i = 0; i < storage.length; i++) {
+    timeline.append(` <li class="todo_list-item">
+      <input type="radio" id="" class="radio" /> ${storage[i].task}
+    </li>`);
+  }
 });
