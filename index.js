@@ -25,7 +25,7 @@ if (localStorage.getItem("tasks")) {
   ];
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
   let addBtn = document.querySelector(".add_btn");
   const cancelBtn = document.getElementById("cancel_todo");
   const saveBtn = document.getElementById("save_todo");
@@ -51,24 +51,15 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // MODAL AND FORM INTERACTIONS
   //Add Button, Modal Handling
-  function openCheck(dialog) {
-    if (dialog.open) {
-      console.log("Dialog open");
-    } else {
-      console.log("Dialog closed");
-    }
-  }
 
   // Update button opens a modal dialog
   addBtn.addEventListener("click", () => {
     dialog.showModal();
-    openCheck(dialog);
   });
 
   // Form cancel button closes the dialog box
   cancelBtn.addEventListener("click", () => {
-    dialog.close("animalNotChosen");
-    openCheck(dialog);
+    dialog.close();
   });
 
   // EVENT LISTENERS
@@ -96,7 +87,9 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   // Form submission
-  saveBtn.addEventListener("submit", function () {
+  saveBtn.addEventListener("click", function () {
+    // Prevent the default form submission
+
     var taskValue = task.value;
     var selectionValue = selection.value;
     var dateValue = dateInput.value;
@@ -109,25 +102,23 @@ window.addEventListener("DOMContentLoaded", () => {
       selection: selectionValue,
     };
 
-    storage.push(newTask);
-    localStorage.setItem("tasks", JSON.stringify(storage));
-
-    // refreshingTl();
-
-    // reload.click();
+    if (!localStorage.getItem("tasks")) {
+      storage = [newTask];
+      localStorage.setItem("tasks", JSON.stringify(storage));
+    } else {
+      storage.push(newTask);
+      localStorage.setItem("tasks", JSON.stringify(storage));
+    }
   });
 
-  // reload.addEventListener("click", () => {
-  //   storage.sort((a, b) => a.date - b.date);
-  //   storage.sort((a, b) => a.time - b.time);
-  //   debugger;
-  //   refreshingTl();
-  // });
+  reload.addEventListener("click", () => {
+    location.reload();
+  });
 
   function refreshingTl() {
     //Appending the items from localstorage unto the tl
+    timeline.innerHTML = "";
     for (i = 0; i < storage.length; i++) {
-      timeline.innerHTML = "";
       timeline.innerHTML += ` <li class="todo_list-item">
       <input type="radio" id="${i}" class="radio" /> ${storage[i].task}
       <span>${storage[i].time}  </span>
