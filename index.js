@@ -4,7 +4,6 @@ function returnTime() {
   var currentDate = new Date();
   var hours = currentDate.getHours();
   var minutes = currentDate.getMinutes();
-  // var seconds = currentDate.getSeconds();
   hours = hours < 10 ? "0" + hours : hours;
   minutes = minutes < 10 ? "0" + minutes + 4 : minutes + 4;
   var timeString = hours + ":" + minutes;
@@ -12,16 +11,19 @@ function returnTime() {
 }
 
 currentTime = returnTime();
-// setInterval(displayTime, 1000);
-
-var storage = JSON.parse(localStorage.getItem("tasks")) || [
-  {
-    task: "add a task",
-    date: today,
-    time: "",
-    selection: "urgent",
-  },
-];
+var storage;
+if (localStorage.getItem("tasks")) {
+  var storage = JSON.parse(localStorage.getItem("tasks"));
+} else {
+  storage = [
+    {
+      task: "add a task",
+      date: today,
+      time: "",
+      selection: "urgent",
+    },
+  ];
+}
 
 window.addEventListener("DOMContentLoaded", () => {
   let addBtn = document.querySelector(".add_btn");
@@ -33,18 +35,21 @@ window.addEventListener("DOMContentLoaded", () => {
   const selection = document.getElementById("selection");
   const task = document.getElementById("task");
   const timeline = document.querySelector(".todo_list");
+  const reload = document.getElementById("reload");
 
   // FORM HANDLING.
-  // Time Handling
+  // Date Handling
   var today = new Date().toISOString().split("T")[0];
   dateInput.setAttribute("min", today);
 
+  //Time Handling. Maybe this should apply to whatever date. But for other dates than today, maybe the min time should be 6 : 00. or whenever the user wakes up from bed
   function timeValidity() {
     if (dateInput.value == today) {
       timeInput.setAttribute("min", currentTime);
     }
   }
 
+  // MODAL AND FORM INTERACTIONS
   //Add Button, Modal Handling
   function openCheck(dialog) {
     if (dialog.open) {
@@ -95,24 +100,42 @@ window.addEventListener("DOMContentLoaded", () => {
     var taskValue = task.value;
     var selectionValue = selection.value;
     var dateValue = dateInput.value;
+    var timeValue = timeInput.value;
 
     var newTask = {
       task: taskValue,
       date: dateValue,
+      time: timeValue,
       selection: selectionValue,
     };
 
     storage.push(newTask);
-    console.log(storage);
-
     localStorage.setItem("tasks", JSON.stringify(storage));
-  });
-  console.log(storage);
 
-  //Appending the items from localstorage unto the tl
-  for (i = 0; i < storage.length; i++) {
-    timeline.append(` <li class="todo_list-item">
-      <input type="radio" id="" class="radio" /> ${storage[i].task}
-    </li>`);
+    // refreshingTl();
+
+    // reload.click();
+  });
+
+  // reload.addEventListener("click", () => {
+  //   storage.sort((a, b) => a.date - b.date);
+  //   storage.sort((a, b) => a.time - b.time);
+  //   debugger;
+  //   refreshingTl();
+  // });
+
+  function refreshingTl() {
+    //Appending the items from localstorage unto the tl
+    for (i = 0; i < storage.length; i++) {
+      timeline.innerHTML = "";
+      timeline.innerHTML += ` <li class="todo_list-item">
+      <input type="radio" id="${i}" class="radio" /> ${storage[i].task}
+      <span>${storage[i].time}  </span>
+      <span>${storage[i].date}  </span>
+      <span>${storage[i].selection}  </span>
+    </li>`;
+    }
   }
+
+  refreshingTl();
 });
